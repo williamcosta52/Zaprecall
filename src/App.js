@@ -1,7 +1,12 @@
 import logo from "../src/assets/logo.png";
-import setaPlay from "../src/assets/seta_play.png";
+import CaixaPergunta from "./components/CaixaPergunta";
+
 
 export default function App() {
+
+  const numeroPerguntas = ["Pergunta 1", "Pergunta 2", "Pergunta 3", "Pergunta 4"];
+
+
   return (
     <div>
       <div className="container">
@@ -9,10 +14,15 @@ export default function App() {
           <img alt="logo" src={logo} />
           <h1>ZapRecall</h1>
         </div>
-        <div className="caixinha-pergunta">
-          <p>Pergunta 1</p>
-          <img alt="seta-play" src={setaPlay} />
-        </div>
+          {numeroPerguntas.map((pergunta, index) => {
+            return (
+            <CaixaPergunta 
+              key={index}
+              pergunta={pergunta}
+              numeroPerguntas={numeroPerguntas}
+            />
+            )
+          })}
         <footer>
           <p>0/4 CONCLUÍDOS</p>
         </footer>

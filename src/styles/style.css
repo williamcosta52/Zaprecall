@@ -17,6 +17,7 @@
 .cabecalho {
     display: flex;
     align-items: center;
+    margin-bottom: 58px;
 }
 .cabecalho img {
     width: 52px;
@@ -61,7 +62,7 @@ footer p {
     display: flex;
     align-items: center;
     margin-left: 37px;
-    margin-top: 58px;
+    margin-bottom: 25px;
 }
 .caixinha-pergunta img {
     width: 20px;
