@@ -25,6 +25,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
 
     return (
         <EstiloPergunta 
+        data-test="flashcard"
         habilitado={virarCarta} 
         revelarResposta={revelarResposta} 
         acertei={acertei}

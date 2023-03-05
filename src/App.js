@@ -3,6 +3,7 @@ import CaixaPergunta from "./components/CaixaPergunta/CaixaPergunta";
 import perguntas from "./perguntas";
 import styled from "styled-components";
 import { useState } from "react";
+import { GlobalStyle } from "styled-components";
 
 export default function App() {
 
@@ -22,7 +23,7 @@ export default function App() {
         </Rodape>
         {numeroPerguntas.map((pergunta, index) => {
         return (
-          <CaixaPergunta data-test="flashcard"
+          <CaixaPergunta
           key={index}
           pergunta={pergunta}
           perguntas={perguntas}
