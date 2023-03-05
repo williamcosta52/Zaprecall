@@ -17,12 +17,12 @@ export default function App() {
           <img alt="logo" src={logo} />
           <h1>ZapRecall</h1>
         </Cabecalho>
-        <Rodape>
+        <Rodape data-test="footer">
             <p>{contador}/{numeroPerguntas.length}</p>
         </Rodape>
         {numeroPerguntas.map((pergunta, index) => {
         return (
-          <CaixaPergunta 
+          <CaixaPergunta data-test="flashcard"
           key={index}
           pergunta={pergunta}
           perguntas={perguntas}

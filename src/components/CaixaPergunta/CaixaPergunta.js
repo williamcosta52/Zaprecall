@@ -20,6 +20,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
     const [errei, setErrei] = useState(false);
     const [quaseErrei, setQuaseErrei] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [dataTeste, setDataTeste] = useState("play-btn")
     const novoObjPerguntas = {...perguntas};
 
     return (
@@ -32,10 +33,10 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
         respostaRiscada={respostaRiscada}
         >
             <DivTexto>
-                <EstiloP>{textoPergunta}</EstiloP>
+                <EstiloP data-test="flashcard-text">{textoPergunta}</EstiloP>
             </DivTexto>
             <DivImagem>
-                <img alt="seta-play" src={icone} onClick={isDisabled ? null : MostrarPergunta} />
+                <img alt="seta-play" data-test={dataTeste} src={icone} onClick={isDisabled ? null : MostrarPergunta} />
                 {errei !== "" || errei === true ? errei : ""}
                 {quaseErrei !== "" || quaseErrei === true ? quaseErrei : ""}
                 {acertei !== "" || acertei === true ? acertei : ""}
@@ -45,6 +46,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
     function MostrarPergunta(){
 
             setVirarCarta(true);
+            setDataTeste("turn-button");
             setIcone(setaVirar);
             setCardClicado(pergunta);
 
@@ -58,9 +60,9 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
             for (let i = 0; i < textoPergunta.length; i++){
                 if (textoPergunta === novoObjPerguntas[i].question){
                     setTextoPergunta(novoObjPerguntas[i].answer);
-                    setErrei(<Botao onClick={resultadoErrado}><span>Não lembrei</span></Botao>)
-                    setQuaseErrei(<BotaoQuase onClick={resultadoQuase}><span>Quase não lembrei</span></BotaoQuase>)
-                    setAcertei(<BotaoZap onClick={resultadoCerto}><span>Zap!</span></BotaoZap>)
+                    setErrei(<Botao data-test="no-btn" onClick={resultadoErrado}><span>Não lembrei</span></Botao>)
+                    setQuaseErrei(<BotaoQuase data-test="partial-btn" onClick={resultadoQuase}><span>Quase não lembrei</span></BotaoQuase>)
+                    setAcertei(<BotaoZap data-test="zap-btn" onClick={resultadoCerto}><span>Zap!</span></BotaoZap>)
                 }
             }
         }
@@ -77,6 +79,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
         setIcone(iconeCerto);
         setContador(contador + 1);
         setIsDisabled(true);
+        setDataTeste("zap-icon")
 }
     function resultadoErrado(){
 
@@ -90,6 +93,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
         setIcone(iconeErro);
         setContador(contador + 1);
         setIsDisabled(true);
+        setDataTeste("no-icon");
     }
     function resultadoQuase(){
 
@@ -103,6 +107,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
         setIcone(iconeQuase);
         setContador(contador + 1);
         setIsDisabled(true);
+        setDataTeste("partial-icon");
     }
 }
 //-----------------------------------------------------------styles--------------------------------------------------------------------//
