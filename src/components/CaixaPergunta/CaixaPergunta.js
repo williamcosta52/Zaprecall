@@ -125,7 +125,7 @@ const EstiloPergunta = styled.div`
     margin-bottom: 25px;
     text-decoration: ${props => props.respostaRiscada ? "line-through" : ""};
     text-decoration-color: ${props => props.acertei && "green"} ${props => props.errei && "red"} ${props => props.quaseErrei && "yellow"};
-    color: ${props => props.acertei === "" ? "green" : props.errei === "" ? "red" : props.quaseErrei === "" ? "yellow" : "black"};
+    color: ${props => props.acertei === "" ? "green" : props.errei === "" ? "red" : props.quaseErrei === "" ? "orange" : "black"};
     img {
             width: ${props => props.revelarResposta ? "85px" : "20px"};
             height: ${props => props.habilitado ? "15px" : "23px"} ${props => props.revelarResposta && "37px"};
