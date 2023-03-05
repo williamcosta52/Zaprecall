@@ -2,14 +2,14 @@ import logo from "../src/assets/logo.png";
 import CaixaPergunta from "./components/CaixaPergunta/CaixaPergunta";
 import perguntas from "./perguntas";
 import styled from "styled-components";
+import { useState } from "react";
 
 export default function App() {
 
   const numeroPerguntas = ["Pergunta 1", "Pergunta 2", "Pergunta 3", "Pergunta 4", "Pergunta 5", "Pergunta 6", "Pergunta 7", "Pergunta 8"];
+  const [contador, setContador] = useState(0);
 
   const novaArrPerguntas = [...numeroPerguntas];
-
-  //console.log(novaArrPerguntas.length)
 
   return (
       <Container>
@@ -18,7 +18,7 @@ export default function App() {
           <h1>ZapRecall</h1>
         </Cabecalho>
         <Rodape>
-            <p>0/4 CONCLUÍDOS</p>
+            <p>{contador}/{numeroPerguntas.length}</p>
         </Rodape>
         {numeroPerguntas.map((pergunta, index) => {
         return (
@@ -27,12 +27,15 @@ export default function App() {
           pergunta={pergunta}
           perguntas={perguntas}
           novaArrPerguntas={novaArrPerguntas}
+          setContador={setContador}
+          contador={contador}
       />
       )
     })}
       </Container>
   );
 }
+//-----------------------------------------------------------------Styles----------------------------------------------------------------
 const Container = styled.div`
     width: 100vw;
     height: calc(100vh - 70px);

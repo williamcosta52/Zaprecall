@@ -2,43 +2,52 @@ import styled from "styled-components";
 import setaPlay from "../../assets/seta_play.png";
 import perguntas from "../../perguntas";
 import setaVirar from "../../assets/seta_virar.png";
-import erreiImg from "../../assets/icone_erro.png";
-import quaseImg from "../../assets/icone_quase.png";
-import acerteiImg from "../../assets/icone_certo.png";
+import iconeCerto from "../../assets/icone_certo.png"
+import iconeErro from "../../assets/icone_erro.png"
+import iconeQuase from "../../assets/icone_quase.png"
 import { useState } from "react";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
-export default function CaixaPergunta({ pergunta, novaArrPerguntas }){
+export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador, contador }){
 
     const [icone, setIcone] = useState(setaPlay);
     const [textoPergunta, setTextoPergunta] = useState(pergunta);
     const [virarCarta, setVirarCarta] = useState(false);
     const [cardClicado, setCardClicado] = useState(null);
     const [revelarResposta, setRevelarResposta] = useState(false);
-    const [acertei, setAcertei] = useState(undefined);
-    const [errei, setErrei] = useState(undefined);
-    const [quaseErrei, setQuaseErrei] = useState(undefined);
+    const [respostaRiscada, setRespostaRiscada] = useState(false);
+    const [acertei, setAcertei] = useState(false);
+    const [errei, setErrei] = useState(false);
+    const [quaseErrei, setQuaseErrei] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const novoObjPerguntas = {...perguntas};
 
     return (
-        <EstiloPergunta habilitado={virarCarta} revelarResposta={revelarResposta}>
+        <EstiloPergunta 
+        habilitado={virarCarta} 
+        revelarResposta={revelarResposta} 
+        acertei={acertei}
+        errei={errei}
+        quaseErrei={quaseErrei}
+        respostaRiscada={respostaRiscada}
+        >
             <DivTexto>
-                <EstiloP >{textoPergunta}</EstiloP>
+                <EstiloP>{textoPergunta}</EstiloP>
             </DivTexto>
             <DivImagem>
-                <img alt="seta-play" src={icone} onClick={MostrarPergunta} />
-                {errei}
-                {quaseErrei}
-                {acertei}
+                <img alt="seta-play" src={icone} onClick={isDisabled ? null : MostrarPergunta} />
+                {errei !== "" || errei === true ? errei : ""}
+                {quaseErrei !== "" || quaseErrei === true ? quaseErrei : ""}
+                {acertei !== "" || acertei === true ? acertei : ""}
             </DivImagem>
         </EstiloPergunta>
     )
     function MostrarPergunta(){
 
-        if (pergunta){
             setVirarCarta(true);
             setIcone(setaVirar);
             setCardClicado(pergunta);
-        }
+
         for (let i = 0; i < novaArrPerguntas.length; i++){
             if (textoPergunta === novaArrPerguntas[i]){
                 setTextoPergunta(novoObjPerguntas[i].question);
@@ -49,17 +58,53 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas }){
             for (let i = 0; i < textoPergunta.length; i++){
                 if (textoPergunta === novoObjPerguntas[i].question){
                     setTextoPergunta(novoObjPerguntas[i].answer);
-                    setErrei(<Botao><span>Não lembrei</span></Botao>)
-                    setQuaseErrei(<BotaoQuase><span>Quase não lembrei</span></BotaoQuase>)
-                    setAcertei(<BotaoZap><span>Zap!</span></BotaoZap>)
+                    setErrei(<Botao onClick={resultadoErrado}><span>Não lembrei</span></Botao>)
+                    setQuaseErrei(<BotaoQuase onClick={resultadoQuase}><span>Quase não lembrei</span></BotaoQuase>)
+                    setAcertei(<BotaoZap onClick={resultadoCerto}><span>Zap!</span></BotaoZap>)
                 }
             }
         }
     }
+    function resultadoCerto(){
+
+        setAcertei("");
+        setTextoPergunta(pergunta);
+        setVirarCarta(false);
+        setRevelarResposta(false);
+        setErrei(false);
+        setQuaseErrei(false);
+        setRespostaRiscada(true);
+        setIcone(iconeCerto);
+        setContador(contador + 1);
+        setIsDisabled(true);
 }
-function erreiResposta(){}
-function quaseErreiResposta(){}
-function acerteiResposta(){}
+    function resultadoErrado(){
+
+        setErrei("");
+        setTextoPergunta(pergunta);
+        setVirarCarta(false);
+        setRevelarResposta(false);
+        setQuaseErrei(false);
+        setRespostaRiscada(true);
+        setAcertei(false);
+        setIcone(iconeErro);
+        setContador(contador + 1);
+        setIsDisabled(true);
+    }
+    function resultadoQuase(){
+
+        setQuaseErrei("");
+        setTextoPergunta(pergunta);
+        setVirarCarta(false);
+        setRevelarResposta(false);
+        setErrei(false);
+        setRespostaRiscada(true);
+        setAcertei(false);
+        setIcone(iconeQuase);
+        setContador(contador + 1);
+        setIsDisabled(true);
+    }
+}
 //-----------------------------------------------------------styles--------------------------------------------------------------------//
 const EstiloPergunta = styled.div`
     background-color: ${props => props.habilitado ? "#FFFFD4" : "white"};
@@ -72,6 +117,9 @@ const EstiloPergunta = styled.div`
     align-items: center;
     margin-left: 37px;
     margin-bottom: 25px;
+    text-decoration: ${props => props.respostaRiscada ? "line-through" : ""};
+    text-decoration-color: ${props => props.acertei && "green"} ${props => props.errei && "red"} ${props => props.quaseErrei && "yellow"};
+    color: ${props => props.acertei === "" ? "green" : props.errei === "" ? "red" : props.quaseErrei === "" ? "yellow" : "black"};
     img {
             width: ${props => props.revelarResposta ? "85px" : "20px"};
             height: ${props => props.habilitado ? "15px" : "23px"} ${props => props.revelarResposta && "37px"};
@@ -86,7 +134,6 @@ const EstiloP = styled.p `
     font-weight: ${props => props.habilitado ? "400" : "700"};
     font-size: ${props => props.habilitado ? "18px" : "16px"};
     line-height: ${props => props.habilitado ? "22px" : "19px"};
-    color: #333333;
     font-family: 'Recursive', sans-serif;
     margin-left: 15px;
     margin-top: ${props => props.habilitado && "100px"};
