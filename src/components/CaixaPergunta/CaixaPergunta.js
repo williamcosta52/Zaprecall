@@ -47,7 +47,7 @@ export default function CaixaPergunta({ pergunta, novaArrPerguntas, setContador,
     function MostrarPergunta(){
 
             setVirarCarta(true);
-            setDataTeste("turn-button");
+            setDataTeste("turn-btn");
             setIcone(setaVirar);
             setCardClicado(pergunta);
 

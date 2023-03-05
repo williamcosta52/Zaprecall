@@ -50,8 +50,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap');
 
 #root {
     display: flex;
