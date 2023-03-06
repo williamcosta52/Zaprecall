@@ -3,7 +3,6 @@ import CaixaPergunta from "./components/CaixaPergunta/CaixaPergunta";
 import perguntas from "./perguntas";
 import styled from "styled-components";
 import { useState } from "react";
-import { GlobalStyle } from "styled-components";
 
 export default function App() {
 
