@@ -60,4 +60,4 @@ table {
     overflow: hidden;
 }
 `
-export default GlobalStyle 
+export default GlobalStyle;
